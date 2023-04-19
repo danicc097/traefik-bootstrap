@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker-compose -f "traefik/docker-compose.yml" up -d --build
+docker-compose -f "traefik/docker-compose.yml" up -d --build --force-recreate
 echo "Visit https://whoami.dev.localhost/ to test connectivity and https certificates"
