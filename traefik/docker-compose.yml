@@ -107,7 +107,7 @@ services:
       traefik-net:
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami-traefik.rule=Host(`whoami.app.localhost`)"
+      - "traefik.http.routers.whoami-traefik.rule=Host(`whoami.dev.localhost`)"
       - "traefik.http.routers.whoami-traefik.tls=true"
     restart: unless-stopped
 
