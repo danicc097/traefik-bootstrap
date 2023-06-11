@@ -15,5 +15,6 @@ http:
 tls:
   certificates:
     # provide container mount path
+    # multiple certs can be added for different domains
     - certFile: "/etc/certs/localhost.pem"
       keyFile: "/etc/certs/localhost-key.pem"
