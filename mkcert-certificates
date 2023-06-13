@@ -3,6 +3,6 @@
 mkdir -p traefik/certificates
 cd traefik/certificates
 # IMPORTANT: *.localhost not supported in many browsers
-mkcert --cert-file localhost.pem --key-file localhost-key.pem localhost "*.local.localhost" "*.dev.localhost" "*.ci.localhost" "*.prod.localhost" 127.0.0.1 ::1 host.docker.internal
+mkcert --cert-file localhost.pem --key-file localhost-key.pem localhost "*.e2e.localhost" "*.local.localhost" "*.dev.localhost" "*.ci.localhost" "*.prod.localhost" 127.0.0.1 ::1 host.docker.internal
 cd ../..
 mkcert -install
