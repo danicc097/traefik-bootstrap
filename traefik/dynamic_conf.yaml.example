@@ -18,5 +18,3 @@ tls:
     # multiple certs can be added for different domains
     - certFile: "/etc/certs/localhost.pem"
       keyFile: "/etc/certs/localhost-key.pem"
-    - certFile: "/home/daniel/Repos/github.com/danicc097/openapi-go-gin-postgres-sqlc/certificates/localhost.pem"
-      keyFile: "/home/daniel/Repos/github.com/danicc097/openapi-go-gin-postgres-sqlc/certificates/localhost-key.pem"
