@@ -1,6 +1,7 @@
 # traefik-boostrap
 
-
+Edit ``dynamic_conf.yaml.example`` and append your own service certificates as
+required. Then `./mkcert-certificates` followed by `./compose-up`
 
 ## Rootless setup
 
