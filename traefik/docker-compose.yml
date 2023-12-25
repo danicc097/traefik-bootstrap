@@ -90,7 +90,8 @@ services:
       - traefik.http.middlewares.test-compress.compress=true
 
     volumes:
-      # with docker socket proxy, do not mount the socket anymore
+      # with docker socket proxy, do not mount the socket anymore.
+      # replaced with socket-proxy in providers.docker in traefik.yaml
       # - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
       - ./dynamic_conf.yaml:/etc/traefik/dynamic_conf.yaml:ro
