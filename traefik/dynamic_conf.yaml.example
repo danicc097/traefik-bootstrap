@@ -11,7 +11,17 @@ http:
           - main: "domain.local"
             sans:
               - "*.domain.local"
+    my-router-1:
+      entryPoints:
+        - web
+      rule: "Host(`traefik-test.dev.localhost`)"
+      service: custom-service-1
 
+  services:
+    custom-service-1:
+      loadBalancer:
+        servers:
+        - url: "https://localhost:8499/"
 tls:
   certificates:
     # provide container mount path

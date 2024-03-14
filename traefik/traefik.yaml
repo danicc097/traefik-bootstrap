@@ -6,6 +6,7 @@ api:
   insecure: true
   dashboard: true
 
+
 # must do entrypoints=web for any service to be passed to traefik
 entryPoints:
   web:
@@ -41,8 +42,9 @@ providers:
   # via a configuration file
   file:
     # path to mounted file
-    filename: /etc/traefik/dynamic_conf.yaml
+    # filename: /etc/traefik/dynamic_conf.yaml
     watch: true
+    directory: /etc/traefik/dynamic/
 
 log:
   level: DEBUG

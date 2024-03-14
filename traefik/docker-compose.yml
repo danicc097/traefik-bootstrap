@@ -50,15 +50,14 @@ services:
   traefik:
     depends_on:
       - socket-proxy
-    image: traefik:v2.9.4
+    image: traefik:v2.11.0
     restart: unless-stopped
-    command:
-      # Enable the access log, with HTTP requests
-      - --accesslog
-      # Enable the Traefik log, for configurations and errors
-      - --log
-      # Enable the Dashboard and API
-      - --api
+    # cannot use command and traefik.yaml config at the same time
+    # https://github.com/traefik/traefik/issues/7709
+    # command:
+    #   - --accesslog
+    #   - --log
+    #   - --api
     container_name: traefik
     networks:
       docker-proxy-internal-net:
@@ -94,7 +93,7 @@ services:
       # replaced with socket-proxy in providers.docker in traefik.yaml
       # - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./dynamic_conf.yaml:/etc/traefik/dynamic_conf.yaml:ro
+      - ./dynamic_conf.yaml:/etc/traefik/dynamic/dynamic_conf.yaml:ro
       - ./certificates/:/etc/certs/:ro
     # extra_hosts:
     #   - "myapp-frontend.dev.localhost:127.0.0.1"
