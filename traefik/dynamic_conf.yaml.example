@@ -1,30 +1,45 @@
 http:
   routers:
     traefik:
-      rule: "Host(`traefik.app.localhost`)"
+      rule: "Host(`traefik.dev.localhost`)"
       service: "api@internal"
+      entryPoints: # breaks it
+        - websecure
       tls:
         domains:
-          - main: "app.localhost"
+          - main: "dev.localhost"
             sans:
-              - "*.app.localhost"
-          - main: "domain.local"
-            sans:
-              - "*.domain.local"
+              - "*.dev.localhost"
     my-router-1:
       entryPoints:
-        - web
+        - websecure
       rule: "Host(`traefik-test.dev.localhost`)"
       service: custom-service-1
+      tls:
+        domains:
+          - main: "dev.localhost"
+            sans:
+              - "*.dev.localhost"
 
   services:
+    # for regular HTTP python -m http.server 8499
+    # cannot use TLS on server without altering certificates to include IP
     custom-service-1:
       loadBalancer:
         servers:
-        - url: "https://localhost:8499/"
+          # - url: "http://127.0.0.1:8499/" # dial tcp 127.0.0.1:8499: connect: connection refused
+          # - url: "http://docker.host.internal:8499/" # dial tcp: lookup docker.host.internal on 127.0.0.11:53: no such host
+          # - url: "http://172.17.0.1:8499/" # docker network ✅
+          # - url: "http://localhost:8499/" # dial tcp 127.0.0.1:8499: connect: connection refused
+          - url: "http://172.27.212.222:8499/" # machine IP in LAN ✅
+          # - url: "https://172.17.0.1:8499/" # 500 Internal Server Error' caused by: tls: first record does not look like a TLS handshake"
+          # - url: "https://localhost:8499/" # 502 Bad Gateway' caused by: dial tcp 127.0.0.1:8499: connect: connection refused
+          # - url: "https://172.27.212.222:8499/" # '500 Internal Server Error' caused by: tls: first record does not look like a TLS handshake
 tls:
   certificates:
     # provide container mount path
     # multiple certs can be added for different domains
     - certFile: "/etc/certs/localhost.pem"
       keyFile: "/etc/certs/localhost-key.pem"
+    - certFile: /home/daniel/traefik-bootstrap/certificates/localhost.pem
+      keyFile: /home/daniel/traefik-bootstrap/certificates/localhost-key.pem
