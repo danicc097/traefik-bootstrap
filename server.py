@@ -2,23 +2,8 @@ import http.server
 import ssl
 import os
 
-# cannot use reverse proxy with tls services
-# traefik gives error with cert: valid for 127.0.0.1, ::1, not 172.27.212.222"
-# my-router-1:
-#       #  entryPoints:
-#         #  - websecure
-#       rule: "Host(`traefik-test.dev.localhost`)"
-#       service: custom-service-1
-#       tls:
-#         domains:
-#           - main: "dev.localhost"
-#             sans:
-#               - "*.dev.localhost"
-# services:
-#     custom-service-1:
-#       loadBalancer:
-#         servers:
-#           - url: "https://172.27.212.222:8499/"
+# cannot use reverse proxy with tls servers without meddling with
+# certs. Just use an http server and let traefik handle https
 
 class OKHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
